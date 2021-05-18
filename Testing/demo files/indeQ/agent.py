@@ -173,7 +173,7 @@ class agent():
         self.cluster_centers = pd.read_csv('./states/recoveryStates_agt' + str(self.SL) +'.csv',
                                 sep=' ', skipinitialspace=True, header=None)
         self.cluster_centers = self.cluster_centers.values
-        df=pd.DataFrame.from_csv('./train/QValues_agt' + str(self.SL) + '_day' + str(day) +'.csv')
+        df=pd.read_csv('./train/QValues_agt' + str(self.SL) + '_day' + str(day) +'.csv')
         self.QValues = df.values
         
                     

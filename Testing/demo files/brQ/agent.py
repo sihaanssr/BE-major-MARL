@@ -246,9 +246,9 @@ class agent():
             self.cluster_centers[nb] = pd.read_csv('./states/recoveryStates_'+str(self.SL)+'_'+str(nb)+'.csv',
                                 sep=' ', skipinitialspace=True, header=None)
             self.cluster_centers[nb] = self.cluster_centers[nb].values
-            df=pd.DataFrame.from_csv('./train/QValues_agt' + str(self.SL) + '_' +  str(nb) + '_day' + str(day) +'.csv')
+            df=pd.read_csv('./train/QValues_agt' + str(self.SL) + '_' +  str(nb) + '_day' + str(day) +'.csv')
             self.QValues[nb] = df.values
-            df=pd.DataFrame.from_csv('./train/M_agt' + str(self.SL) + '_' +  str(nb) + '_day' + str(day) + '.csv')
+            df=pd.read_csv('./train/M_agt' + str(self.SL) + '_' +  str(nb) + '_day' + str(day) + '.csv')
             self.M[nb] = df.values
         self.secsThisPhase = 0
         self.currPhaseID = 0

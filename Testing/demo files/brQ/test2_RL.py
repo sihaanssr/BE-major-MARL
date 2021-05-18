@@ -28,7 +28,7 @@ FIFO = '/tmp/sumo_brQ'
 GUI = True  
 
 def loadData():
-    df=pd.DataFrame.from_csv('./data_org/dfQueue_test_agt0_day0.csv')
+    df=pd.read_csv('./data_org/dfQueue_test_agt0_day0.csv')
     timeBase = df.values[:,0]*(1.0*var.secondsInHour)
     samples = df.shape[0]
     dataQueues = {}; dataTimes = {}; dataSpeed = {}
@@ -39,11 +39,11 @@ def loadData():
         dataSpeed[v] = np.zeros([samples, edges]) 
     
         for day in range(var.totalDaysTest-1):
-            df=pd.DataFrame.from_csv(f'./data_org/dfQueue_test_agt{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfQueue_test_agt{v}_day{day}.csv')
             dataQ = df.values
-            df=pd.DataFrame.from_csv(f'./data_org/dfWaiting_test_agt{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfWaiting_test_agt{v}_day{day}.csv')
             dataW = df.values
-            df=pd.DataFrame.from_csv(f'./data_org/dfMeanSpeed_test_agt{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfMeanSpeed_test_agt{v}_day{day}.csv')
             dataS = df.values
             for e in range(edges):
                 dataQueues[v][:,e] += dataQ[:,e+1] #en veh
@@ -343,73 +343,6 @@ def test(dayLoad):
             currSod += 1
             traci.simulationStep() 
         traci.close() #End one day of simulation
-        
-        # if(day==0):
-        #     dfRewValsSummaryMaster = {} 
-        #     for sl in var.SLs:
-        #         dfRewValsSummaryMaster[sl] = {}   
-        
-        # #Save actions for each  agent
-        # aux = ['hour']
-        # for sl in var.SLs:
-        #     aux.append('agt' + str(sl))
-        # dfActions.columns = aux
-        # dfActions['hour'] = dfActions['hour']/(1.0*var.secondsInHour)
-        # dfActions.to_csv('dfActions_test_day'+str(day)+'.csv')
-        
-        # #Save reward information for each  agent
-        # for sl in var.SLs:
-        #     dfRewVals[sl].columns = ['hour', 'day ' + str(day)]
-        #     dfRewVals[sl]['hour'] = dfRewVals[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfRewVals[sl].to_csv('dfRewVals_test_agt'+str(sl)+'_day'+str(day)+'.csv')
-            
-        #     dfMean = dfRewVals[sl].mean(axis=0)
-        #     dfMedian = dfRewVals[sl].median(axis = 0)
-        #     dfMin = dfRewVals[sl].min(axis=0)
-        #     df = pd.DataFrame([[str(day), dfMean[1], dfMedian[1], dfMin[1]]])
-        #     df.columns = ['day', 'mean', 'median', 'min']
-            
-        #     if day == 0:
-        #         dfRewValsSummaryMaster[sl] = df
-        #     else:
-        #         dfRewValsSummaryMaster[sl] = dfRewValsSummaryMaster[sl].append(df, ignore_index=True)    
-        #         dfRewValsSummaryMaster[sl].columns = ['day', 'mean', 'median', 'min']            
-        #     dfRewValsSummaryMaster[sl].to_csv('dfRewValsSummary_test_agt' + str(sl) + '.csv')
-        
-        # #Save traffic information for each Agent
-        # for sl in var.SLs:
-        #     colNames = ['hour']
-        #     for edge in var.agents[sl].listEdges:
-        #         colNames.append(edge)
-                
-        #     dfQueueTracker[sl].columns = colNames
-        #     dfQueueTracker[sl]['hour'] = dfQueueTracker[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfQueueTracker[sl].to_csv('dfQueue_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-            
-        #     dfWaitingTracker[sl].columns = colNames
-        #     dfWaitingTracker[sl]['hour'] = dfWaitingTracker[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfWaitingTracker[sl].to_csv('dfWaiting_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-            
-        #     dfC02Emission[sl].columns = colNames
-        #     dfC02Emission[sl]['hour'] = dfC02Emission[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfC02Emission[sl].to_csv('dfCO2Emissions_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-            
-        #     dfNOxEmission[sl].columns = colNames
-        #     dfNOxEmission[sl]['hour'] = dfNOxEmission[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfNOxEmission[sl].to_csv('dfNOxEmissions_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-        
-        #     dfFuelConsumption[sl].columns = colNames
-        #     dfFuelConsumption[sl]['hour'] = dfFuelConsumption[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfFuelConsumption[sl].to_csv('dfFuelConsumption_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-            
-        #     dfNoiseEmission[sl].columns = colNames
-        #     dfNoiseEmission[sl]['hour'] = dfNoiseEmission[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfNoiseEmission[sl].to_csv('dfNoiseEmission_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-
-        #     dfMeanSpeed[sl].columns = colNames
-        #     dfMeanSpeed[sl]['hour'] = dfMeanSpeed[sl]['hour']/(1.0*var.secondsInHour)
-        #     dfMeanSpeed[sl].to_csv('dfMeanSpeed_test_agt' + str(sl) + '_day' + str(day) + '.csv')
-    
     fileOut = open("days.csv","w")
     fileOut.write("End Testing")
     fileOut.close()

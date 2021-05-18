@@ -27,7 +27,7 @@ FIFO = '/tmp/sumo_tf'
 GUI = True
 
 def loadData():
-    df=pd.DataFrame.from_csv('./data_org/dfQueue_testTF_int0_day0.csv')
+    df=pd.read_csv('./data_org/dfQueue_testTF_int0_day0.csv')
     timeBase = df.values[:,0]*(1.0*var.secondsInHour)
     samples = df.shape[0]
     dataQueues = {}; dataTimes = {}; dataSpeed = {}
@@ -38,11 +38,11 @@ def loadData():
         dataSpeed[v] = np.zeros([samples, edges]) 
     
         for day in range(var.totalDaysTest-1):
-            df=pd.DataFrame.from_csv(f'./data_org/dfQueue_testTF_int{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfQueue_testTF_int{v}_day{day}.csv')
             dataQ = df.values
-            df=pd.DataFrame.from_csv(f'./data_org/dfWaiting_testTF_int{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfWaiting_testTF_int{v}_day{day}.csv')
             dataW = df.values
-            df=pd.DataFrame.from_csv(f'./data_org/dfSpeed_testTF_int{v}_day{day}.csv')
+            df=pd.read_csv(f'./data_org/dfSpeed_testTF_int{v}_day{day}.csv')
             dataS = df.values
             for e in range(edges):
                 dataQueues[v][:,e] += dataQ[:,e+1] #en veh
