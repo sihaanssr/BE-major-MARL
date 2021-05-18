@@ -16,9 +16,17 @@ After you have installed [SUMO simulator](https://sumo.dlr.de/docs/index.html), 
 
 In a terminal (run with Python3):
 
-```
+```bash
 cd Testing/demo files/gui
 python gui_demo.py
+```
+In all likelihood this will fail saying with a ```qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.``` error.
+To fix this reinstall xcb like so
+```bash
+sudo apt-get install --reinstall libxcb-xinerama0
+```
+
+```bash
 cd ../FT
 python testTF.py
 cd ../indeQ
