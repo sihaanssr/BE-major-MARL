@@ -335,7 +335,10 @@ def test(dayLoad):
             fifo = open(FIFO, 'rb')
             fifo.read()
             fifo.close()
-            fifo = open(FIFO, 'wb')
+            # fifo = open(FIFO, 'wb')
+            f = os.open(FIFO, os.O_RDWR)
+            fifo = os.fdopen(f, 'wb')
+
             fifo.write(data.SerializeToString())
             fifo.close()
             #print('Finalizado')
